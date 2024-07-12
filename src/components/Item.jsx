@@ -1,10 +1,12 @@
 import { MdOutlineBathtub, MdOutlineBed, MdOutlineGarage } from "react-icons/md"
 import HeartBtn from "./HeartBtn"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { CgRuler } from "react-icons/cg"
 
 const Item = ({ property }) => {
+  const nav = useNavigate()
   return (
-    <div className="rounded-2xl bg-white">
+    <div className="rounded-2xl bg-white mb-4 cursor-pointer" onClick={() => nav(`../listing/${property.id}`)}>
       <div className="pb-2 relative">
         <img src={property.image} alt={property.title} className="rounded-lg" />
         <div className="absolute top-4 right-6">
@@ -23,11 +25,14 @@ const Item = ({ property }) => {
         <div className="flexCenter gap-x-2 border-r border-slate-900/5 pr-4 font-[500]">
           <MdOutlineGarage /> {property.facilities.parkings}
         </div>
+        <div className="flexCenter gap-x-2 border-r border-slate-900/5 pr-4 font-[500]">
+          <CgRuler /> 400
+        </div>
       </div>
       <p className="pt-2 mb-4 line-clamp-2">{property.description}</p>
       <div className="flexBetween">
         <div className="bold-20">${property.price}.00</div>
-        <Link to=''><button className="btn-secondary rounded-sm !py-[7px] !px-5 shadow-sm">View Details</button></Link>
+        <Link to=''><button className="btn-secondary rounded-sm !py-[7px] !px-5 shadow-sm" onClick={() => nav(`../listing/${property.id}`)}>View Details</button></Link>
       </div>
     </div>
   )

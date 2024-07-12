@@ -6,8 +6,28 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import { PROPERTIES } from "../constant/data"
 import Item from "./Item"
+import useProperties from "../hooks/useProperties"
+import { PuffLoader } from 'react-spinners'
 
 const Properties = () => {
+
+  const { data, isError, isLoading } = useProperties();
+
+  if (isError) {
+    return (
+      <div>
+        <span>Error while detching data</span>
+      </div>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <div className="h-64 flexCenter">
+        <PuffLoader height='80' width='80' radius={1} color="#555" aria-label="puff-loading" />
+      </div>
+    )
+  }
   return (
     <section className="max-padd-container">
       <div className="max-padd-container bg-primary py-16 xl:py-28 rounded-3xl">
@@ -37,8 +57,8 @@ const Properties = () => {
             }
           }} modules={[Autoplay]} className="h-[288px] md:h-[400px]">
           {
-            PROPERTIES.map((property) => (
-              <SwiperSlide key={property.title}>
+            data.slice(0, 9).map((property) => (
+              <SwiperSlide key={property.id}>
                 <Item property={property} />
               </SwiperSlide>
             ))
